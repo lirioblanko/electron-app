@@ -1,10 +1,10 @@
 {
-  "name": "electron-app",
+  "name": "FirstApp",
   "version": "1.0.0",
-  "description": "An Electron application with Vue",
+  "description": "Приложение на базе Electron для определения сетевого подключения",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "lirioblanko",
+  "homepage": "https://github.com/lirioblanko",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
