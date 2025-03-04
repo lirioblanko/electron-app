@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('offline', async () => ipcRenderer.send('get-status', 'offline'))
   window.addEventListener('online', async () => ipcRenderer.send('get-status', 'online'))
 
-  const initialStatus = navigator.onLine ? 'online' : 'offline';
-  ipcRenderer.send('get-status', initialStatus);
+  const initialStatus = navigator.onLine ? 'online' : 'offline'
+  ipcRenderer.send('get-status', initialStatus)
 })
 
 

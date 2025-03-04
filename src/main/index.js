@@ -108,5 +108,5 @@ ipcMain.on('scan', (event, dir) => {
 })
 
 ipcMain.on('get-status', (event, status) => {
-  event.reply('get-status', status);
+  event.reply('get-status', status)
 })
