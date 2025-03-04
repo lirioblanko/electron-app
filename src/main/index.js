@@ -78,7 +78,6 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
   createWindow()
   createMenu()
   ipcMain.on('ping', () => console.log('pong'))
@@ -90,15 +89,24 @@ app.whenReady().then(() => {
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  // if (process.platform !== 'darwin') {
-    app.quit()
-  // }
+  app.quit()
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+function scan(dir) {
+  return fs
+    .readdir(dir, { withFileTypes: true })
+    .then((files) => files.filter((file) => file.isFile()).map((file) => file.name))
+}
 
+ipcMain.on('scan', (event, dir) => {
+  function rescan(dir) {
+    scan(dir).then((files) => event.reply('files', files))
+  }
+  rescan(dir)
+  watch(dir, rescan)
+})
+
+ipcMain.on('get-status', (event, status) => {
+  event.reply('get-status', status);
+})

@@ -1,24 +1,23 @@
 <script setup>
-import Versions from './components/Versions.vue'
+import { ref } from 'vue'
 
-const ipcHandle = () => window.electron.ipcRenderer.send('ping')
+let message = ref('')
+const files = ref([])
+const scan = () => window.electron.ipcRenderer.send('scan', '.')
+
+window.electron.ipcRenderer.on('files', (_, list) => {
+  files.value = list
+})
+
+window.electron.ipcRenderer.on('get-status', (_, status) => {
+  message.value = status
+})
 </script>
 
 <template>
-  <img alt="logo" class="logo" src="./assets/electron.svg" />
-  <div class="creator">Powered by electron-vite</div>
-  <div class="text">
-    Build an Electron app with
-    <span class="vue">Vue</span>
-  </div>
-  <p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
-  <div class="actions">
-    <div class="action">
-      <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
-    </div>
-    <div class="action">
-      <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
-    </div>
-  </div>
-  <Versions />
+  <button @click="scan">Получить файлы</button>
+  <p>{{ `Приложение работает ${message}` }}</p>
+  <ul>
+    <li v-for="file in files" :key="file">{{ file }}</li>
+  </ul>
 </template>
